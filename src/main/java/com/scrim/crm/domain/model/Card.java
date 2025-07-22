@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -15,21 +16,20 @@ public class Card {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @EqualsAndHashCode.Include
-  private Long id;
+  private UUID id;
 
   @ManyToOne
   private Client client;
 
-  @Column(nullable = false)
   private String card_numbers;
 
   @Enumerated(EnumType.STRING)
   private StatusCard status;
 
-  @Column(nullable = false)
-  private String bank;
+  @Enumerated(EnumType.STRING)
+  private TypeCard type;
 
-  @Column(nullable = false)
+  private String bank;
   private String cvc;
 
   private OffsetDateTime dateCreated;
@@ -37,7 +37,7 @@ public class Card {
 
   public void cancel() {
     if (isCanceled()) {
-      throw new StatusException("Card already canceled");
+      throw new StatusException("Card already canceled.");
     }
 
     setStatus(StatusCard.CANCELED);
@@ -46,7 +46,7 @@ public class Card {
 
   public void removeCancel() {
     if (!isCanceled()) {
-      throw new StatusException("Card is not canceled");
+      throw new StatusException("Card is not canceled.");
     }
 
     setStatus(StatusCard.ACTIVE);

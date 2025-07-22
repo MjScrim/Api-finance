@@ -1,6 +1,8 @@
 package com.scrim.crm.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,16 +18,8 @@ public class Client {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(nullable = false)
   private String name;
-
-  @Column(nullable = false)
-  private String cpf;
-
-  @Column(nullable = false)
   private String email;
-
-  @Column(nullable = false)
   private String fone;
 
 }
