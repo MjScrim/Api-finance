@@ -1,0 +1,39 @@
+services:
+  scrim_finance:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scrim_api
+    environment:
+      DB: mysql
+      DB_HOST: mysql
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - scrim_finance-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: scrimfinance
+      MYSQL_USER: scrim
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    networks:
+      - scrim_finance-network
+    healthcheck:
+       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+       interval: 5s
+       timeout: 5s
+       retries: 5
+       start_period: 10s
+
+networks:
+  scrim_finance-network:
+    driver: bridge
