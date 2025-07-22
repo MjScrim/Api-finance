@@ -21,7 +21,7 @@ public class Card {
   @ManyToOne
   private Client client;
 
-  private String card_numbers;
+  private String cardNumbers;
 
   @Enumerated(EnumType.STRING)
   private StatusCard status;

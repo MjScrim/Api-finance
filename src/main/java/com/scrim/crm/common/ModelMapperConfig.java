@@ -14,7 +14,7 @@ public class ModelMapperConfig {
     var modelMapper = new ModelMapper();
 
     modelMapper.createTypeMap(Card.class, CardModel.class)
-      .addMappings(mapper -> mapper.map(Card::getCard_numbers, CardModel::setCard_numbers));
+      .addMappings(mapper -> mapper.map(Card::getCardNumbers, CardModel::setCardNumbers));
 
     return modelMapper;
   }

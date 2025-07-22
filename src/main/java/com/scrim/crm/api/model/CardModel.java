@@ -14,7 +14,7 @@ public class CardModel {
   private UUID id;
 
   private Client client;
-  private String card_numbers;
+  private String cardNumbers;
   private StatusCard status;
   private TypeCard type;
   private String bank;

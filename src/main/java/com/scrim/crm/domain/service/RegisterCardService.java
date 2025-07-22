@@ -27,7 +27,7 @@ public class RegisterCardService {
       throw new SystemException("Card to be registered must not have an id.");
     }
 
-    boolean numberInUse = cardRepository.findByNumbers(newCard.getCard_numbers())
+    boolean numberInUse = cardRepository.findByCardNumbers(newCard.getCardNumbers())
       .filter(c -> !c.equals(newCard))
       .isPresent();
 
