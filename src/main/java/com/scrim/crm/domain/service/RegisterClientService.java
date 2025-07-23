@@ -24,7 +24,7 @@ public class RegisterClientService {
   @Transactional
   public Client save(Client newClient) {
     boolean emailInUse = clientRepository.findByEmail(newClient.getEmail())
-      .filter(p -> !p.equals(newClient))
+      .filter(c -> !c.equals(newClient))
       .isPresent();
 
     if (emailInUse) {
