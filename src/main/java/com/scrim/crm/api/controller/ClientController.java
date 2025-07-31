@@ -1,50 +1,45 @@
 package com.scrim.crm.api.controller;
 
-import com.scrim.crm.domain.model.Client;
-import com.scrim.crm.domain.repository.ClientRepository;
-import com.scrim.crm.domain.service.RegisterClientService;
+import com.scrim.crm.api.model.ClientModel;
+import com.scrim.crm.api.model.input.ClientInput;
+import com.scrim.crm.domain.service.ClientQueryService;
+import com.scrim.crm.domain.service.ClientRegisterService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("api/v1/clients")
 public class ClientController {
 
-  private final ClientRepository clientRepository;
-  private final RegisterClientService registerClientService;
+  private final ClientRegisterService clientRegisterService;
+  private final ClientQueryService clientQueryService;
 
-  @GetMapping
-  public ResponseEntity<List<Client>> list() {
-    return ResponseEntity.status(HttpStatus.OK).body(clientRepository.findAll());
-  }
+  //@GetMapping
+  //public ResponseEntity<List<Client>> list() {
+  //  return ResponseEntity.status(HttpStatus.OK).body(clientRepository.findAll());
+  //}
 
   @GetMapping("/{clientId}")
-  public ResponseEntity<Client> search(@PathVariable UUID clientId) {
-    return clientRepository.findById(clientId)
-      .map(ResponseEntity::ok)
-      .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<ClientModel> search(@PathVariable UUID clientId) {
+    return ResponseEntity.status(HttpStatus.FOUND).body(clientQueryService.search(clientId));
   }
 
   @PostMapping("/create")
-  public ResponseEntity<Client> create(@RequestBody Client client) {
-    Client newClient = registerClientService.save(client);
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
+  public ResponseEntity<ClientModel> create(@RequestBody ClientInput input) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(clientRegisterService.save(input));
   }
 
   @DeleteMapping("/{clientId}")
   public ResponseEntity<Void> remove(@PathVariable UUID clientId) {
-    if (!clientRepository.existsById(clientId)) {
+    if (!clientRegisterService.remove((clientId))) {
       return ResponseEntity.notFound().build();
     }
 
-    registerClientService.remove(clientId);
     return ResponseEntity.noContent().build();
   }
 

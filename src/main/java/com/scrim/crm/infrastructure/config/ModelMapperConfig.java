@@ -1,7 +1,7 @@
-package com.scrim.crm.common;
+package com.scrim.crm.infrastructure.config;
 
-import com.scrim.crm.api.model.CardModel;
-import com.scrim.crm.domain.model.Card;
+import com.scrim.crm.api.model.ClientModel;
+import com.scrim.crm.domain.model.Client;
 import org.springframework.context.annotation.Bean;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +13,8 @@ public class ModelMapperConfig {
   public ModelMapper modelMapper() {
     var modelMapper = new ModelMapper();
 
-    modelMapper.createTypeMap(Card.class, CardModel.class)
-      .addMappings(mapper -> mapper.map(Card::getCardNumbers, CardModel::setCardNumbers));
+    modelMapper.createTypeMap(Client.class, ClientModel.class)
+      .addMappings(mapper -> mapper.map(Client::getCards, ClientModel::setCards));
 
     return modelMapper;
   }
