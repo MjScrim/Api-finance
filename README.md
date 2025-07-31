@@ -1,6 +1,6 @@
 # Api Spring
 
-Projeto sobre API e organização de negócios e relacionamento entre entindidades, buscando organização e estabilidade do sistema.
+Projeto sobre API e organização e arquitetura DDD(Domain-Driven Design), isolando o problema e tecnologia das regras de negócios.
 
 ## Como executar
 
@@ -15,10 +15,8 @@ docker-copmpose up --build
 ## Rotas funcionais até o então
 
 ```bash
-/clients -> GET
-/clients/{clientId} -> GET, DELETE
-/clients/create -> POST
+/api/v1/clients/{clientId} -> GET, DELETE
+/api/v1/clients/create -> POST
 ```
 
-Ainda falta a lógica mais estruturada que liga um Client já existente como proprietário de um Card.
-Até o então as rotas de Card funcionam, mas ainda são mais burocráticas.
+Refatorando a estrutura, e buscando aplicar arquitetura hexagonal. Mantendo a prioridade e acessibilidade da aplicação via o AggregatoRoot Client.
